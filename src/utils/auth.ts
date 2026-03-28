@@ -1,4 +1,4 @@
-import type { IUser } from "../types/IUser";
+import type { IUserSession } from "../types/IUserSession";
 import type { Rol } from "../types/Rol";
 import { getUSer, removeUser } from "./localStorage";
 import { navigate } from "./navigate";
@@ -6,7 +6,7 @@ import { navigate } from "./navigate";
 export const checkAuhtUser = (
   redireccion1: string,
   redireccion2: string,
-  rol: Rol
+  rol: Rol,
 ) => {
   console.log("comienzo de checkeo");
 
@@ -19,7 +19,7 @@ export const checkAuhtUser = (
   } else {
     console.log("existe pero no tiene el rol necesario");
 
-    const parseUser: IUser = JSON.parse(user);
+    const parseUser: IUserSession = JSON.parse(user);
     if (parseUser.role !== rol) {
       navigate(redireccion2);
       return;

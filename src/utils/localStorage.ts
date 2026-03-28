@@ -1,20 +1,23 @@
 import type { IUser, IUserStoraged } from "../types/IUserStorage";
 import type { Rol } from "../types/Rol";
+import type { IUserSession } from "../types/IUserSession";
 
-export const saveUser = (user: IUser) => {
+const userSessionKey = "userData";
+
+export const saveUser = (user: IUserSession) => {
   const parseUser = JSON.stringify(user);
-  localStorage.setItem("userData", parseUser);
+  localStorage.setItem(userSessionKey, parseUser);
 };
 export const getUSer = () => {
-  return localStorage.getItem("userData");
+  return localStorage.getItem(userSessionKey);
 };
 export const removeUser = () => {
-  localStorage.removeItem("userData");
+  localStorage.removeItem(userSessionKey);
 };
 
 const usersKey = "users";
 
-const getUsersFromLocaleStorage = (): IUserStoraged[] => {
+const getUsersFromLocaleStorage = async (): Promise<IUserStoraged[]> => {
   const raw = localStorage.getItem(usersKey);
   return raw ? JSON.parse(raw) : [];
 };
@@ -24,8 +27,10 @@ const ROLES: Rol[] = ["client", "admin"];
 const getRandomRol = (): Rol => ROLES[Math.floor(Math.random() * ROLES.length)];
 
 export const saveUsers = async (user: IUser): Promise<void> => {
-  const usersSaved: IUserStoraged[] = getUsersFromLocaleStorage();
+  const usersSaved: IUserStoraged[] = await getUsersFromLocaleStorage();
   const role = getRandomRol();
   const usersParsedToSave = JSON.stringify([...usersSaved, { ...user, role }]);
   localStorage.setItem(usersKey, usersParsedToSave);
 };
+
+export const getUsers = async () => await getUsersFromLocaleStorage();

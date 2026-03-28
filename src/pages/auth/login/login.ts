@@ -1,30 +1,42 @@
-import type { IUser } from "../../../types/IUser";
-import type { Rol } from "../../../types/Rol";
+import type { IUserSession } from "../../../types/IUserSession";
+import { getUsers, saveUser } from "../../../utils/localStorage";
 import { navigate } from "../../../utils/navigate";
 
 const form = document.getElementById("form") as HTMLFormElement;
 const inputEmail = document.getElementById("email") as HTMLInputElement;
-//const inputPassword = document.getElementById("password") as HTMLInputElement;
-const selectRol = document.getElementById("rol") as HTMLSelectElement;
+const inputPassword = document.getElementById("password") as HTMLInputElement;
+const alert = document.getElementById("alert") as HTMLSpanElement;
 
-form.addEventListener("submit", (e: SubmitEvent) => {
+const usersStoraged = await getUsers();
+
+form?.addEventListener("submit", (e: SubmitEvent) => {
   e.preventDefault();
   const valueEmail = inputEmail.value;
-  //const valuePassword = inputPassword.value;
-  const valueRol = selectRol.value as Rol;
+  const valuePassword = inputPassword.value;
 
-  if (valueRol === "admin") {
-    navigate("/src/pages/admin/home/home.html");
-  } else if (valueRol === "client") {
-    navigate("/src/pages/client/home/home.html");
+  const userFounded = usersStoraged.filter(
+    (u) => u.email == valueEmail && u.password == valuePassword,
+  )[0];
+
+  // MOSTRAR ESTE MENSAJE CUANDO HAYA UN ERROR
+  if (!userFounded) {
+    alert.style.display = "block";
+    return;
   }
 
-  const user: IUser = {
+  const role = userFounded.role;
+
+  const user: IUserSession = {
     email: valueEmail,
-    role: valueRol,
+    role: role,
     loggedIn: true,
   };
 
-  const parseUser = JSON.stringify(user);
-  localStorage.setItem("userData", parseUser);
+  saveUser(user);
+
+  if (role === "admin") {
+    navigate("/src/pages/admin/home/home.html");
+  } else if (role === "client") {
+    navigate("/src/pages/client/home/home.html");
+  }
 });
