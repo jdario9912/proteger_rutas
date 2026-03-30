@@ -1,5 +1,6 @@
 import type { IUser } from "../../../types/IUserStorage";
-import { saveUsers } from "../../../utils/localStorage";
+import { roleBasedNavigation } from "../../../utils/auth";
+import { addUserToStorage } from "../../../utils/localStorage";
 
 const form = document.querySelector<HTMLFormElement>("#form");
 
@@ -12,7 +13,9 @@ form?.addEventListener("submit", async (e: Event) => {
     password: formData.get("password") as string,
   };
 
-  await saveUsers(user);
+  const userSaved = await addUserToStorage(user);
+
+  roleBasedNavigation(userSaved.role);
 
   formElement.reset();
 });

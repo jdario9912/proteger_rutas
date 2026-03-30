@@ -1,19 +1,14 @@
-import { checkAuhtUser, logout } from "../../../utils/auth";
+import type { IUserSession } from "../../../types/IUserSession";
+import { checkRole } from "../../../utils/auth";
+import { adminPath, loginPath } from "../../../utils/const";
+import { getUSer } from "../../../utils/localStorage";
+import { navigate } from "../../../utils/navigate";
 
-const buttonLogout = document.getElementById(
-  "logoutButton"
-) as HTMLButtonElement;
-buttonLogout?.addEventListener("click", () => {
-  logout();
-});
+const user = getUSer();
 
-
-const initPage = () => {
-  console.log("inicio de pagina");
-  checkAuhtUser(
-    "/src/pages/auth/login/login.html",
-    "/src/pages/admin/home/home.html",
-    "client"
-  );
-};
-initPage();
+if (!user) {
+  navigate(loginPath);
+} else {
+  const parseUser: IUserSession = JSON.parse(user);
+  checkRole(parseUser.role, "client", adminPath);
+}

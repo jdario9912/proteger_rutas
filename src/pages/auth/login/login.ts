@@ -1,16 +1,15 @@
 import type { IUserSession } from "../../../types/IUserSession";
+import { roleBasedNavigation } from "../../../utils/auth";
 import { getUsers, saveUser } from "../../../utils/localStorage";
-import { navigate } from "../../../utils/navigate";
 
 const form = document.getElementById("form") as HTMLFormElement;
 const inputEmail = document.getElementById("email") as HTMLInputElement;
 const inputPassword = document.getElementById("password") as HTMLInputElement;
 const alert = document.getElementById("alert") as HTMLSpanElement;
 
-const usersStoraged = await getUsers();
-
-form?.addEventListener("submit", (e: SubmitEvent) => {
+form?.addEventListener("submit", async (e: SubmitEvent) => {
   e.preventDefault();
+  const usersStoraged = await getUsers();
   const valueEmail = inputEmail.value;
   const valuePassword = inputPassword.value;
 
@@ -33,9 +32,5 @@ form?.addEventListener("submit", (e: SubmitEvent) => {
 
   saveUser(user);
 
-  if (role === "admin") {
-    navigate("/src/pages/admin/home/home.html");
-  } else if (role === "client") {
-    navigate("/src/pages/client/home/home.html");
-  }
+  roleBasedNavigation(user.role);
 });

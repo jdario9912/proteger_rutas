@@ -1,33 +1,40 @@
 import type { IUserSession } from "../types/IUserSession";
 import type { Rol } from "../types/Rol";
+import { adminPath, clientPath, loginPath } from "./const";
 import { getUSer, removeUser } from "./localStorage";
 import { navigate } from "./navigate";
 
 export const checkAuhtUser = (
-  redireccion1: string,
-  redireccion2: string,
-  rol: Rol,
+  adminRedirection: string,
+  clientRedirection: string,
 ) => {
-  console.log("comienzo de checkeo");
-
   const user = getUSer();
 
   if (!user) {
-    console.log("no existe en local");
-    navigate(redireccion1);
+    navigate(loginPath);
     return;
   } else {
-    console.log("existe pero no tiene el rol necesario");
-
     const parseUser: IUserSession = JSON.parse(user);
-    if (parseUser.role !== rol) {
-      navigate(redireccion2);
-      return;
-    }
+    if (!parseUser.loggedIn)
+      if (parseUser.role === "admin") navigate(adminRedirection);
+      else navigate(clientRedirection);
   }
 };
 
 export const logout = () => {
   removeUser();
-  navigate("/src/pages/auth/login/login.html");
+  navigate(loginPath);
+};
+
+export const roleBasedNavigation = (role: Rol) => {
+  if (role === "admin") navigate(adminPath);
+  else if (role === "client") navigate(clientPath);
+};
+
+export const checkRole = (
+  userRole: Rol,
+  pageRole: Rol,
+  redirectionPath: string,
+) => {
+  if (userRole !== pageRole) navigate(redirectionPath);
 };
