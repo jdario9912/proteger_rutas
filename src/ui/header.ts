@@ -1,23 +1,8 @@
-export const createHeader = () => {
-  const header = document.createElement("header") as HTMLElement;
-  header.innerHTML = `
-    <h1>Food Store</h1>
-    <nav>
-        <ul>
-            <li>
-                <a href="/pages/catalogo/catalogo.html">Catalogo</a>
-            </li>
-            <li>
-                <a href="/pages/carrito/carrito.html">Carrito</a>
-            </li>
-        </ul>
-    </nav>
-  `;
+import { headerTemplate } from "../templates/header";
+import { logoTemplate } from "../templates/logo";
+import { navBarTemplate } from "../templates/navbar";
 
-  return header;
-};
-// header.style.display = "flex";
-// header.style.justifyContent = "space-between";
-// header.style.alignItems = "center";
-// header.style.padding = "1rem";
-// header.style.borderBottom = "1px solid var(--separator-color)";
+export const headerUI = headerTemplate({
+  logo: logoTemplate(),
+  navbar: navBarTemplate(),
+});

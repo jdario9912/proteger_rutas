@@ -1,6 +1,6 @@
-import { createHeader } from "../../ui/header";
+import { headerUI } from "../../ui/header";
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = document.getElementById("app") as HTMLDivElement;
-  app.appendChild(createHeader());
+  app.appendChild(headerUI);
 });
