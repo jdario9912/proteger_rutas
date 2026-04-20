@@ -6,21 +6,19 @@ const saveCartInLocalStorage = (cart: number[]): void => {
   localStorage.setItem(CART_KEY, cartString(cart));
 };
 
-const getCart = async (): Promise<number[]> => {
-  return await JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+export const getCart = (): number[] => {
+  return JSON.parse(localStorage.getItem(CART_KEY) || "[]");
 };
 
-export const addProductToCart = async (productId: number): Promise<void> => {
-  const cart = await getCart();
+export const addProductToCart = (productId: number): void => {
+  const cart = getCart();
   if (cart.includes(productId)) return;
   cart.push(productId);
   saveCartInLocalStorage(cart);
 };
 
-export const removeProductFromCart = async (
-  productId: number,
-): Promise<void> => {
-  const cart = await getCart();
+export const removeProductFromCart = (productId: number): void => {
+  const cart = getCart();
   const index = cart.indexOf(productId);
   if (index !== -1) {
     cart.splice(index, 1);
@@ -36,7 +34,7 @@ export const updateCartQuantity = async (
   productId: number,
   quantity: number,
 ): Promise<void> => {
-  const cart = await getCart();
+  const cart = getCart();
   const index = cart.indexOf(productId);
   if (index !== -1) {
     cart[index] = quantity;
