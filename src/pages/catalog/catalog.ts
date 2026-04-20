@@ -16,8 +16,20 @@ const ul = document.createElement("ul");
 const categories = getCategories();
 
 categories.forEach((category) => {
-  const li = document.createElement("li");
-  li.textContent = category.nombre;
+  const li = document.createElement("li") as HTMLLIElement;
+  const button = document.createElement("button") as HTMLButtonElement;
+  button.textContent = category.nombre;
+  button.addEventListener("click", () => {
+    const filteredProducts = products.filter((product) =>
+      product.categorias.some((cat) => cat.id === category.id),
+    );
+    productList.innerHTML = "";
+    filteredProducts.forEach((product) => {
+      const card = productCard(product);
+      productList.innerHTML += card;
+    });
+  });
+  li.appendChild(button);
   ul.appendChild(li);
 });
 
