@@ -2,6 +2,7 @@
     --primary-color: #3498db;
     --primary-color-light: #48c7e0a3;
     --secondary-color: #e74c3c;
+    --accent-color: #fb6105;
     --text-color: #333;
     --background-color: #f5f5f5;
     --separator-color: #ccc;
@@ -48,6 +49,16 @@ nav a {
 
 nav li:hover {
     text-decoration: underline;
+}
+
+.cart-counter {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 100%;
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    font-size: 0.8rem;
 }
 
 .main-layout {
