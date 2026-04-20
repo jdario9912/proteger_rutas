@@ -52,6 +52,20 @@ const productCard = (product: Product) => {
   `;
 };
 
+const searchInput = document.getElementById("search") as HTMLInputElement;
+
+searchInput.addEventListener("input", () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  const filteredProducts = products.filter((product) =>
+    product.nombre.toLowerCase().includes(searchTerm),
+  );
+  productList.innerHTML = "";
+  filteredProducts.forEach((product) => {
+    const card = productCard(product);
+    productList.innerHTML += card;
+  });
+});
+
 products.forEach((product) => {
   const card = productCard(product);
   productList.innerHTML += card;
