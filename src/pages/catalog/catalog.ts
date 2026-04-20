@@ -1,6 +1,7 @@
 import { getCategories, getProducts } from "../../data/data";
 import { productCard } from "../../templates/product-card";
 import { headerUI } from "../../ui/header";
+import { addProductToCart } from "../cart/utils";
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = document.getElementById("header") as HTMLDivElement;
@@ -56,4 +57,16 @@ searchInput.addEventListener("input", () => {
 products.forEach((product) => {
   const card = productCard(product);
   productList.innerHTML += card;
+});
+
+const addButtons = document.querySelectorAll(
+  "#add-button",
+) as NodeListOf<HTMLButtonElement>;
+
+addButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
+    const productId = button.dataset.productId;
+    const product = products.find((p) => p.id === Number(productId));
+    if (product) await addProductToCart(product.id);
+  });
 });

@@ -19,7 +19,7 @@ export const productCard = (product: Product) => {
           <p class="product-description">
               ${product.descripcion}
           </p>
-          <button class="add-button">+ Agregar</button>
+          <button class="add-button" id="add-button" data-product-id="${product.id}">+ Agregar</button>
       </div>
   </div>
   `;
