@@ -1,5 +1,5 @@
 import { getCategories, getProducts } from "../../data/data";
-import type { Product } from "../../types/product";
+import { productCard } from "../../templates/product-card";
 import { headerUI } from "../../ui/header";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -38,31 +38,6 @@ categoryContainer.appendChild(ul);
 const productList = document.getElementById("product-list") as HTMLDivElement;
 
 const products = getProducts();
-
-const productCard = (product: Product) => {
-  return `
-  <div id="product-card" class="product-card">
-      <img
-          src="${product.imagen}"
-          alt="${product.nombre}"
-          class="product-image"
-      />
-      <div class="product-details">
-          <div class="producto-category-price-container">
-              <p class="product-category">${product.categorias[0].nombre}</p>
-              <span class="product-price">$${product.precio.toFixed(2)}</span>
-          </div>
-          <h4 class="product-name">
-              ${product.nombre}
-          </h4>
-          <p class="product-description">
-              ${product.descripcion}
-          </p>
-          <button class="add-button">+ Agregar</button>
-      </div>
-  </div>
-  `;
-};
 
 const searchInput = document.getElementById("search") as HTMLInputElement;
 
