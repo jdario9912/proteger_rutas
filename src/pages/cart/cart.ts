@@ -1,6 +1,13 @@
 import { cartCounter } from "../../ui/common/cart-counter";
 import { header } from "../../ui/common/header";
-import { removeItem, renderCart, updateItemQuantity } from "./utils";
+import {
+  cleanCart,
+  removeItem,
+  renderCart,
+  updateItemQuantity,
+  updateSubtotal,
+  updateTotal,
+} from "./utils";
 
 document.addEventListener("DOMContentLoaded", () => {
   header();
@@ -10,3 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
 renderCart();
 removeItem();
 updateItemQuantity();
+cleanCart();
+updateSubtotal();
+updateTotal();

@@ -97,6 +97,7 @@ export const removeItem = () => {
         removeProductFromCart(Number(productId));
         renderCart();
         cartCounter();
+        updateTotal();
       }
     }
   });
@@ -125,6 +126,7 @@ export const updateItemQuantity = () => {
       updateCartQuantity(productIdParsed, quantityUpdated);
       renderCart();
       cartCounter();
+      updateTotal();
     }
 
     if (target.matches("#decrement-quantity")) {
@@ -145,6 +147,54 @@ export const updateItemQuantity = () => {
       updateCartQuantity(productIdParsed, quantityUpdated);
       renderCart();
       cartCounter();
+      updateTotal();
     }
   });
+};
+
+export const cleanCart = () => {
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if (target.matches("#clear-cart")) {
+      clearCart();
+      renderCart();
+      cartCounter();
+      updateTotal();
+    }
+  });
+};
+
+export const updateSubtotal = () => {
+  const subtotalElement = document.getElementById("subtotal");
+  if (!subtotalElement) return;
+  subtotalElement as HTMLDivElement;
+  const products = getProducts();
+
+  const subtotal = getCart()
+    .map((cartItem) => {
+      const product = products.filter(
+        (product) => product.id === cartItem.id,
+      )[0];
+      return { product, quantity: cartItem.quantity };
+    })
+    .reduce(
+      (acc, product) => acc + product.product.precio * product.quantity,
+      0,
+    )
+    .toFixed(2);
+
+  subtotalElement.textContent = `Subtotal: $${subtotal}`;
+  return subtotal;
+};
+
+export const updateTotal = () => {
+  const subtotal = updateSubtotal();
+  if (!subtotal) return;
+  const totalElement = document.getElementById("total");
+  if (!totalElement) return;
+  totalElement as HTMLDivElement;
+
+  const total = Number(subtotal).toFixed(2);
+
+  totalElement.textContent = `Total: $${total}`;
 };

@@ -4,22 +4,30 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../../style.css" />
-        <title>Carrito</title>
+        <title>🛒 Carrito</title>
     </head>
     <body>
         <div id="header"></div>
         <main>
             <div>
-                <h2 class="cart-title">Carrito</h2>
+                <h2 class="cart-title">🛒 Carrito</h2>
                 <div class="cart-container">
                     <div id="cart-list"></div>
-                    <div id="cart-resume">
-                        <h4>Resumen</h4>
-                        <div id="subtotal"></div>
-                        <div id="total"></div>
-                        <div id="resumen-buttons">
-                            <button>Finalizar compra</button>
-                            <button>Vaciar carrito</button>
+                    <div class="cart-resume-container">
+                        <div id="cart-resume" class="cart-resume">
+                            <h4>Resumen</h4>
+                            <div id="subtotal" class="cart-subtotal">
+                                Subtotal: $15000
+                            </div>
+                            <div id="total" class="cart-total">
+                                Total: $30000
+                            </div>
+                            <div id="resumen-buttons" class="resumen-buttons">
+                                <button disabled>Finalizar compra</button>
+                                <button id="clear-cart" class="remove-button">
+                                    Vaciar carrito
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
