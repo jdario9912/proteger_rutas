@@ -8,6 +8,8 @@ Aplicación de carrito de compras desarrollada como primer parcial de Programaci
 
 Ver el video de presentación [aquí](https://youtu.be/_VT9fhEzyyA)
 
+Ver el código fuente [aquí](https://github.com/jdario9912/1er-parcial-programacion-III)
+
 ---
 
 ## 🚀 Instalación y Uso
